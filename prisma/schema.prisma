@@ -14,12 +14,24 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  password String
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
+  Post      Post[]
 
   @@map("users")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  name      String
+  user_id    Int
+  author    User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@map("posts")
 }
